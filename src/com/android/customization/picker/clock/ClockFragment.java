@@ -78,7 +78,6 @@ public class ClockFragment extends ToolbarFragment {
     private View mError;
     private ThemesUserEventLogger mEventLogger;
     private CheckBox mStatusArea;
-    private boolean mShowStatusArea;
 
     @Override
     public void onAttach(Context context) {
@@ -111,7 +110,7 @@ public class ClockFragment extends ToolbarFragment {
                 public void onSuccess() {
                     mOptionsController.setAppliedOption(mSelectedOption);
                     // Update our custom setting
-                    Settings.System.putInt(getContext().getContentResolver(), Settings.System.TYPE_CLOCK_SHOW_STATUS_AREA, mShowStatusArea ? 1 : 0);
+                    Settings.System.putInt(getContext().getContentResolver(), Settings.System.TYPE_CLOCK_SHOW_STATUS_AREA, mStatusArea.isChecked() ? 1 : 0);
                     Toast.makeText(getContext(), R.string.applied_changes_msg,
                             Toast.LENGTH_LONG).show();
                 }
