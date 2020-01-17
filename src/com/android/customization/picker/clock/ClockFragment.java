@@ -150,6 +150,7 @@ public class ClockFragment extends ToolbarFragment {
                for (Clockface option : options) {
                    if (option.isActive(mClockManager)) {
                        mSelectedOption = option;
+                       Log.d("spezi77 clockwerk Orange", "Selected clockface id: " + option.getId() + " title: " + option.getTitle());
                    }
                }
                // For development only, as there should always be a grid set.
