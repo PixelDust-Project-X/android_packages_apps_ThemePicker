@@ -71,6 +71,15 @@
                 app:layout_constraintTop_toBottomOf="@id/options_container"
                 app:layout_constraintVertical_bias="1.0"/>
 
+            <CheckBox
+                android:id="@+id/show_statusarea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/show_statusarea"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
             <Button
                 android:id="@+id/apply_button"
                 style="@style/ActionPrimaryButton"

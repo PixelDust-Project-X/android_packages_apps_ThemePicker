@@ -18,10 +18,13 @@ package com.android.customization.picker.clock;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -75,6 +78,8 @@ public class ClockFragment extends ToolbarFragment {
     private View mContent;
     private View mError;
     private ThemesUserEventLogger mEventLogger;
+    private CheckBox mStatusArea;
+    private boolean mShowStatusArea;
 
     @Override
     public void onAttach(Context context) {
@@ -97,13 +102,19 @@ public class ClockFragment extends ToolbarFragment {
         mLoading = view.findViewById(R.id.loading_indicator);
         mError = view.findViewById(R.id.error_section);
         setUpOptions();
+        boolean showStatusArea = Settings.System.getIntForUser(getContext().getContentResolver(),
+                                    Settings.System.TYPE_CLOCK_SHOW_STATUS_AREA, 1, UserHandle.USER_CURRENT) == 1;
+        mStatusArea = view.findViewById(R.id.show_statusarea);
+        mStatusArea.setChecked(showStatusArea);
         view.findViewById(R.id.apply_button).setOnClickListener(v -> {
             mClockManager.apply(mSelectedOption, new Callback() {
                 @Override
                 public void onSuccess() {
                     mOptionsController.setAppliedOption(mSelectedOption);
-                    Toast.makeText(getContext(), R.string.applied_clock_msg,
-                            Toast.LENGTH_SHORT).show();
+                    // Update our custom setting
+                    Settings.System.putIntForUser(getContext().getContentResolver(), Settings.System.TYPE_CLOCK_SHOW_STATUS_AREA, mShowStatusArea ? 1 : 0, UserHandle.USER_CURRENT);
+                    Toast.makeText(getContext(), R.string.applied_changes_msg,
+                            Toast.LENGTH_LONG).show();
                 }
 
                 @Override
