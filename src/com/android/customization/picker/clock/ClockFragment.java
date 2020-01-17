@@ -18,7 +18,6 @@ package com.android.customization.picker.clock;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -102,8 +101,8 @@ public class ClockFragment extends ToolbarFragment {
         mLoading = view.findViewById(R.id.loading_indicator);
         mError = view.findViewById(R.id.error_section);
         setUpOptions();
-        boolean showStatusArea = Settings.System.getIntForUser(getContext().getContentResolver(),
-                                    Settings.System.TYPE_CLOCK_SHOW_STATUS_AREA, 1, UserHandle.USER_CURRENT) == 1;
+        boolean showStatusArea = Settings.System.getInt(getContext().getContentResolver(),
+                                    Settings.System.TYPE_CLOCK_SHOW_STATUS_AREA, 1) == 1;
         mStatusArea = view.findViewById(R.id.show_statusarea);
         mStatusArea.setChecked(showStatusArea);
         view.findViewById(R.id.apply_button).setOnClickListener(v -> {
@@ -112,7 +111,7 @@ public class ClockFragment extends ToolbarFragment {
                 public void onSuccess() {
                     mOptionsController.setAppliedOption(mSelectedOption);
                     // Update our custom setting
-                    Settings.System.putIntForUser(getContext().getContentResolver(), Settings.System.TYPE_CLOCK_SHOW_STATUS_AREA, mShowStatusArea ? 1 : 0, UserHandle.USER_CURRENT);
+                    Settings.System.putInt(getContext().getContentResolver(), Settings.System.TYPE_CLOCK_SHOW_STATUS_AREA, mShowStatusArea ? 1 : 0);
                     Toast.makeText(getContext(), R.string.applied_changes_msg,
                             Toast.LENGTH_LONG).show();
                 }
