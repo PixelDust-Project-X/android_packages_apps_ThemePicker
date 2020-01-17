@@ -101,7 +101,7 @@ public class ClockFragment extends ToolbarFragment {
         mError = view.findViewById(R.id.error_section);
         setUpOptions();
         boolean showStatusArea = Settings.System.getInt(getContext().getContentResolver(),
-                                    Settings.System.TYPE_CLOCK_SHOW_STATUS_AREA, 1) == 1;
+                                    Settings.System.CLOCK_SHOW_STATUS_AREA, 0) == 1;
         mStatusArea = view.findViewById(R.id.show_statusarea);
         mStatusArea.setChecked(showStatusArea);
         view.findViewById(R.id.apply_button).setOnClickListener(v -> {
@@ -110,7 +110,7 @@ public class ClockFragment extends ToolbarFragment {
                 public void onSuccess() {
                     mOptionsController.setAppliedOption(mSelectedOption);
                     // Update our custom setting
-                    Settings.System.putInt(getContext().getContentResolver(), Settings.System.TYPE_CLOCK_SHOW_STATUS_AREA, mStatusArea.isChecked() ? 1 : 0);
+                    Settings.System.putInt(getContext().getContentResolver(), Settings.System.CLOCK_SHOW_STATUS_AREA, mStatusArea.isChecked() ? 1 : 0);
                     Toast.makeText(getContext(), R.string.applied_changes_msg,
                             Toast.LENGTH_LONG).show();
                 }
@@ -156,6 +156,12 @@ public class ClockFragment extends ToolbarFragment {
                // For development only, as there should always be a grid set.
                if (mSelectedOption == null) {
                    mSelectedOption = options.get(0);
+               }
+               // Hide checkbox for show/hide statusarea for the default clockface
+               if (mSelectedOption.getTitle() != "Default") {
+                   mStatusArea.setVisibility(View.INVISIBLE);
+               } else {
+                   mStatusArea.setVisibility(View.VISIBLE);
                }
                createAdapter();
            }

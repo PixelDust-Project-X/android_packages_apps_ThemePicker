@@ -16,7 +16,7 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="show_statusarea">Display status information (date, weather, etc.)</string>
+    <string name="show_statusarea">Show date and weather info</string>
     <string name="applied_changes_msg">Clock settings applied (SysUI restart may be required)</string>
 
 </resources>
