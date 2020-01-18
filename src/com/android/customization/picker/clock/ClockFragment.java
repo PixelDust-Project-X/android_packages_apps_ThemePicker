@@ -153,15 +153,15 @@ public class ClockFragment extends ToolbarFragment {
                        Log.d("spezi77 clockwerk Orange", "Selected clockface id: " + option.getId() + " title: " + option.getTitle());
                    }
                }
+               // Hide checkbox for show/hide statusarea for the default clockface
+               if (mSelectedOption.getTitle() != "Default") {
+                   mStatusArea.setVisibility(View.VISIBLE);
+               } else {
+                   mStatusArea.setVisibility(View.INVISIBLE);
+               }
                // For development only, as there should always be a grid set.
                if (mSelectedOption == null) {
                    mSelectedOption = options.get(0);
-               }
-               // Hide checkbox for show/hide statusarea for the default clockface
-               if (mSelectedOption.getTitle() != "Default") {
-                   mStatusArea.setVisibility(View.INVISIBLE);
-               } else {
-                   mStatusArea.setVisibility(View.VISIBLE);
                }
                createAdapter();
            }
